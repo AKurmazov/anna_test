@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     # custom apps
     'accounts',
+    'tasks',
 ]
 
 REST_FRAMEWORK = {
