@@ -20,7 +20,7 @@ $ docker-compose run web python manage.py test
 ### Authentication
 The authentication is done via the Authorization header by providing a token. All mentioned body parameters are required
 ```
-[POST] /api/accounts/register/
+[POST] /api/accounts/register
 [Body]  {
             username: <string>
             password: <string>
@@ -28,7 +28,7 @@ The authentication is done via the Authorization header by providing a token. Al
 [Comment] Creates a new user and returns the Authorization token
 
 
-[POST] /api/account/login/
+[POST] /api/account/login
 [Body]  {
             username: <string>
             password: <string>
@@ -36,7 +36,7 @@ The authentication is done via the Authorization header by providing a token. Al
 [Comment] Authenticates an existing user and returns the Authorization token
 
 
-[POST] /api/account/logout/
+[POST] /api/account/logout
 [Headers] Authorization: Token <token>
 [Comment] Terminates current session
 ```
@@ -46,12 +46,12 @@ The API offers endpoints for creating, retrieving, and updating tasks, and also 
 
 
 ```
-[GET] /api/tasks/all/
+[GET] /api/tasks/all
 [Headers] Authorization: Token <token>
 [Comment] Returns all current user's tasks
 
 
-[POST] /api/tasks/create/
+[POST] /api/tasks/create
 [Body]  {
             name: <string>
             description: <string>
@@ -60,12 +60,12 @@ The API offers endpoints for creating, retrieving, and updating tasks, and also 
 [Comment] Creates a task with status 'New'
 
 
-[GET] /api/tasks/<pk>/
+[GET] /api/tasks/<pk>
 [Headers] Authorization: Token <token>
 [Comment] Returns the task that has the provided primary key <pk>
 
 
-[PUT] /api/tasks/<pk>/
+[PUT] /api/tasks/<pk>
 [Body]  {
             [optional] name: <string>                            
             [optional] description: <string>
@@ -79,7 +79,7 @@ The API offers endpoints for creating, retrieving, and updating tasks, and also 
           then the scheduled_on parameter should be provided
           
           
-[GET] /api/tasks/<pk>/changes/
+[GET] /api/tasks/<pk>/changes
 [Headers] Authorization: Token <token>
 [Comment] Returns the history of changes of the task that has the
           provided primary key <pk>
