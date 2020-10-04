@@ -33,7 +33,6 @@ class TaskCreateAPI(generics.CreateAPIView):
         }, status=rf_status.HTTP_201_CREATED)
 
 
-# ToDo: Move update method to the serializer, and create put method here
 class TaskRetrieveUpdateAPI(generics.RetrieveUpdateAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -46,22 +45,11 @@ class TaskRetrieveUpdateAPI(generics.RetrieveUpdateAPIView):
             raise Http404
         return instance
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.name = request.data.get('name', instance.name)
-        instance.description = request.data.get('description', instance.description)
-        status = request.data.get('status', instance.status)
-
-        if status == 'Scheduled':
-            scheduled_on = request.data.get('scheduled_on', instance.scheduled_on)
-            if not scheduled_on:
-                return Response({
-                    'detail': 'Deadline date is not provided'
-                }, status=rf_status.HTTP_400_BAD_REQUEST)
-            instance.status = status
-            instance.scheduled_on = scheduled_on
-
-        serializer = self.get_serializer(instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data, status=rf_status.HTTP_200_OK)
+    def put(self, request, *args, **kwargs):
+        task = self.get_object()
+        serializer = self.serializer_class(task, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=rf_status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=rf_status.HTTP_400_BAD_REQUEST)
