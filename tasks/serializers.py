@@ -12,8 +12,14 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        task = Task.objects.create(name=validated_data['name'], description=validated_data['description'],
-                                   creator=validated_data['creator'])
+        name = validated_data.get('name')
+        description = validated_data.get('description')
+        creator = validated_data.get('creator')
+
+        if not name or not description:
+            raise serializers.ValidationError('Both name and description are required')
+
+        task = Task.objects.create(name=name, description=description, creator=creator)
 
         # Make a change record
         log = {
