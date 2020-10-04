@@ -4,7 +4,7 @@ from rest_framework import status as rf_status
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from tasks.serializers import TaskSerializer
+from tasks.serializers import TaskSerializer, ChangeLogSerializer
 from tasks.models import Task
 
 
@@ -53,3 +53,16 @@ class TaskRetrieveUpdateAPI(generics.RetrieveUpdateAPIView):
             return Response(serializer.data, status=rf_status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=rf_status.HTTP_400_BAD_REQUEST)
+
+
+class ChangeLogListAPI(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = ChangeLogSerializer
+
+    def get_queryset(self, **kwargs):
+        task = get_object_or_404(Task, id=self.kwargs['pk'])
+        if self.request.user.id != task.creator.id:
+            raise Http404
+        return task.changes

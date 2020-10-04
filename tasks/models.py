@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 
 
 class Task(models.Model):
@@ -19,3 +20,13 @@ class Task(models.Model):
 
     def __str__(self):
         return f"Task#{self.pk} | Created by {self.creator}"
+
+
+class ChangeLog(models.Model):
+    log = JSONField()
+    task = models.ForeignKey(Task, related_name='changes', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Change log | Task#{self.task} at {self.created_at}"
+
