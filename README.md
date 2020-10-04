@@ -6,7 +6,7 @@ This project is a test assignment given by ANNA Financial Services
 ### Running Locally
 The project uses Docker, so initially you have to build and run the image using docker-compose:
 ```
-$ docker-compose up -d
+$ docker-compose up --build -d
 ```
 Next, run the migrations by executing the following command:
 ```
