@@ -16,6 +16,7 @@ Additionally, you can run tests a similar way:
 ```
 $ docker-compose run web python manage.py test
 ```
+After the above-written instructions are followed you can access the development server on http://0.0.0.0:8000 by default
 
 ### Authentication
 The authentication is done via the Authorization header by providing a token. All mentioned body parameters are required
