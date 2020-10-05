@@ -49,6 +49,9 @@ The API offers endpoints for creating, retrieving, and updating tasks, and also 
 ```
 [GET] /api/tasks/all
 [Headers] Authorization: Token <token>
+[Query Parameters]
+        ordering = <scheduled_on/-scheduled_on> - ascending/descending correspondingly
+        status = <New/Scheduled/In-Progress/Completed>
 [Comment] Returns all current user's tasks
 
 
