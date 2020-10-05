@@ -1,6 +1,8 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status as rf_status
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
@@ -13,6 +15,11 @@ class TaskListAPI(generics.ListAPIView):
         permissions.IsAuthenticated,
     ]
     serializer_class = TaskSerializer
+
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['status']
+    ordering_fields = ['scheduled_on']
+    ordering = 'created_at'
 
     def get_queryset(self):
         return self.request.user.tasks

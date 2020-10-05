@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # third-party apps
     'rest_framework',
     'knox',
+    'django_filters',
 
     # custom apps
     'accounts',
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'knox.auth.TokenAuthentication',
+    ),
+    'DJANGO_FILTER_BACKENDS': (
+        'django-filters.rest_framework.DjangoFilterBackend',
     ),
 }
 
